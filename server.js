@@ -2,23 +2,11 @@ var http = require('http');
 var url = require('url');
 
 function start(route, handle) {
-  http.createServer(function(req, res) {
-    var postData = '';
-    var pathname = url.parse(req.url).pathname;
+  http.createServer(function(request, response) {
+    var pathname = url.parse(request.url).pathname;
     console.log('Request for ' + pathname + ' received.');
 
-    req.setEncoding("utf8");
-
-    // Listening to POST request & getting data
-    req.addListener('data', function(postDataChunk) {
-      postData += postDataChunk;
-      console.log('postDataChunk: ' + postDataChunk);
-    });
-
-    // POST end event passing postData to route
-    req.addListener('end', function() {
-      route(handle, pathname, res, postData);
-    });
+    route(handle, pathname, response, request);
 
   }).listen(8000);
 }

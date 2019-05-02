@@ -5,7 +5,8 @@ var handlers = require('./handlers');
 var handle = {
   '/': handlers.start,
   '/start': handlers.start,
-  '/upload': handlers.upload
+  '/upload': handlers.upload,
+  '/show': handlers.show
 };
 
 server.start(router.route, handle);
